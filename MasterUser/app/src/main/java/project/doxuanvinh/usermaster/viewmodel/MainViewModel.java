@@ -29,20 +29,17 @@ import rx.schedulers.Schedulers;
 public class MainViewModel extends RecyclerViewModel {
     private PlanManager mManager;
     private Context mContext;
-    private ArrayList<User> listUser = new ArrayList<>();
-    private Realm mRealm;
     @Inject
     public MainViewModel(PlanManager mManager, @Named("activityContext") Context mContext) {
         super();
         this.mManager = mManager;
         this.mContext = mContext;
-        mRealm = Realm.getInstance(mContext);
     }
 
 
     @Override
     public RecyclerViewAdapter<User> getAdapter() {
-        return new RecyclerViewAdapter<User>(R.layout.item_user_git, new ArrayList<>(mRealm.allObjects(User.class))) {
+        return new RecyclerViewAdapter<User>(R.layout.item_user_git, new ArrayList<>(mManager.getAllUser())) {
             @Override
             public void onBindViewHolder(SimpleViewHolder holder, int position, List<Object> payloads) {
                 super.onBindViewHolder(holder, position, payloads);
@@ -50,26 +47,17 @@ public class MainViewModel extends RecyclerViewModel {
         };
     }
 
-
     @Override
     protected RecyclerView.LayoutManager createLayoutManager() {
         return new LinearLayoutManager(mContext);
     }
 
-    public void setListUser() {
-        this.listUser = listUser;
-    }
-
-
     public void addUser(String userName) {
-        mRealm.beginTransaction();
-        User user = mRealm.createObject(User.class);
-        user.setName(userName);
-        mRealm.commitTransaction();
-        refresh(new ArrayList<>(mRealm.allObjects(User.class)));
+        mManager.addUser(userName);
+        refresh(new ArrayList<>(mManager.getAllUser()));
     }
 
     public void destroyRealm() {
-        mRealm.close();
+        mManager.closeRealm();
     }
 }
