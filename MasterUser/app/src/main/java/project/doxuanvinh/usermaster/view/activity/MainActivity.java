@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 import io.realm.Realm;
 import project.doxuanvinh.usermaster.App;
 import project.doxuanvinh.usermaster.R;
+import project.doxuanvinh.usermaster.base.recyclerview.RecyclerViewAdapter;
 import project.doxuanvinh.usermaster.base.ui.BaseActivity;
 import project.doxuanvinh.usermaster.data.entity.test.GithubUser;
 import project.doxuanvinh.usermaster.data.entity.test.User;
@@ -46,7 +48,19 @@ public class MainActivity extends BaseActivity {
             onClickAddUser();
         });
 
+        ((RecyclerViewAdapter<User>) mViewModel.getAdapter()).setOnItemChildViewClickListener(R.id.layout_more, (view, data, position) -> {
+            onClickOptionUser((User) data);
+        });
+
     }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        mViewModel.getUserAdapter().setOnItemChildViewClickListener(R.id.layout_more, (view, data, position) -> {
+//            onClickOptionItem((User) data);
+//        });
+//    }
 
     private void onClickAddUser() {
         final Dialog mDialog = new Dialog(this, R.style.Dialog_Transparent);
@@ -65,6 +79,24 @@ public class MainActivity extends BaseActivity {
         });
         mDialog.show();
 
+    }
+
+    private void onClickOptionUser(User user) {
+        final Dialog mDialog = new Dialog(this, R.style.Dialog_Transparent);
+        AppUtils.setOverScreenDialog(mDialog, this);
+
+        mDialog.setContentView(R.layout.layout_option_user);
+        TextView tvEdit = (TextView) mDialog.findViewById(R.id.tv_edit);
+        TextView tvDelete = (TextView) mDialog.findViewById(R.id.tv_delete);
+
+        RxView.clicks(tvEdit).throttleFirst(Constant.THROTTLE_FIRST_TIME, TimeUnit.SECONDS).subscribe(aVoid1 -> {
+            mDialog.dismiss();
+        });
+        RxView.clicks(tvDelete).throttleFirst(Constant.THROTTLE_FIRST_TIME, TimeUnit.SECONDS).subscribe(aVoid1 -> {
+            mViewModel.deleteUser(user);
+            mDialog.dismiss();
+        });
+        mDialog.show();
     }
 
     public void inject() {

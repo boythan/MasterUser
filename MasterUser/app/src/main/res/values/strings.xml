@@ -6,4 +6,6 @@
     <string name="oke">oke</string>
     <string name="user_name">User name</string>
     <string name="add_user">Add user</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

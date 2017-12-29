@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="item"
-            type="project.doxuanvinh.usermaster.data.entity.test.User"/>
+            type="project.doxuanvinh.usermaster.data.entity.test.User" />
     </data>
+
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
@@ -20,7 +23,6 @@
             android:layout_weight="10"
             android:orientation="horizontal">
 
-
             <TextView
                 android:id="@+id/nameView"
                 android:layout_width="0dp"
@@ -31,6 +33,20 @@
                 android:text="@{item.name}"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
+
+            <FrameLayout
+                android:id="@+id/layout_more"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="@dimen/padding_medium"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_menu" />
+
+            </FrameLayout>
 
         </LinearLayout>
     </android.support.v7.widget.CardView>

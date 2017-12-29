@@ -1,5 +1,6 @@
 package project.doxuanvinh.usermaster.base.viewmodel;
 
+import android.databinding.Bindable;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,16 +18,16 @@ public abstract class RecyclerViewModel<ITEM> extends ViewModel{
     RecyclerView.LayoutManager layoutManager;
     RecyclerViewAdapter<ITEM> adapter;
 
-    protected abstract RecyclerViewAdapter<ITEM> getAdapter();
+    protected abstract RecyclerViewAdapter<ITEM> createAdapter();
     protected abstract RecyclerView.LayoutManager createLayoutManager();
     public RecyclerViewModel() {
         super();
+        layoutManager = createLayoutManager();
+        adapter = createAdapter();
     }
 
 
     public final void setupRecyclerView(RecyclerView recyclerView) {
-        layoutManager = createLayoutManager();
-        adapter = getAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
     }
@@ -36,7 +37,7 @@ public abstract class RecyclerViewModel<ITEM> extends ViewModel{
             refreshLayout.setRefreshing(true);
             ( new Handler()).postDelayed(() -> {
                 refreshLayout.setRefreshing(false);
-                getAdapter().notifyDataSetChanged();
+
             }, 3000);
         });
 
@@ -44,5 +45,10 @@ public abstract class RecyclerViewModel<ITEM> extends ViewModel{
 
     public void refresh(ArrayList<ITEM> items){
         adapter.setItems(items);
+    }
+
+    @Bindable
+    public RecyclerViewAdapter<ITEM> getAdapter() {
+        return adapter;
     }
 }

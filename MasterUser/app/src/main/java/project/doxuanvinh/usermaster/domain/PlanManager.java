@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 import project.doxuanvinh.usermaster.data.entity.test.GithubUser;
 import project.doxuanvinh.usermaster.data.entity.test.User;
 import project.doxuanvinh.usermaster.data.net.Api;
@@ -49,4 +50,10 @@ public class PlanManager {
         realm.close();
     }
 
+    public void deleteUser(User user) {
+        realm.beginTransaction();
+        RealmResults<User> result = realm.where(User.class).equalTo("name",user.getName()).findAll();
+        result.clear();
+        realm.commitTransaction();
+    }
 }
