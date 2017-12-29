@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="project.doxuanvinh.usermaster.viewmodel.MainViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="project.doxuanvinh.usermaster.view.activity.MainActivity">
+
+        <!--<Button-->
+        <!--android:id="@+id/btn_add"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Add"/>-->
+        <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:title="@string/app_name"
+            android:background="@color/color_weak_gray"
+            android:paddingRight="@dimen/padding_small">
+
+            <ImageView
+                android:id="@+id/img_add"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/padding_xlarge"
+                android:layout_gravity="right"
+                android:src="@android:drawable/ic_input_add"/>
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            bind:onRefresh="@{viewModel}">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:scrollbars="vertical"
+                bind:recyclerViewModel="@{viewModel}" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+</layout>

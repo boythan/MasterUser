@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">UserMaster</string>
+    <string name="custom_font">Custom font</string>
+    <string name="current_position_title">Current position</string>
+    <string name="cancel">cancel</string>
+    <string name="oke">oke</string>
+    <string name="user_name">User name</string>
+    <string name="add_user">Add user</string>
+</resources>
