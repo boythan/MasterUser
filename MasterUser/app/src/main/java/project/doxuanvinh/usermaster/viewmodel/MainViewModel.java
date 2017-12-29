@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,13 +45,14 @@ public class MainViewModel extends RecyclerViewModel {
 
     @Override
     public RecyclerViewAdapter<User> createAdapter() {
-        userAdapter = new RecyclerViewAdapter<User>(R.layout.item_user, new ArrayList<>(mManager.getAllUser())){};
+        userAdapter = new RecyclerViewAdapter<User>(R.layout.item_user, new ArrayList<>(mManager.getAllUser())) {
+        };
         userAdapter.setOnItemClickListener((itemView, data, position) -> {
             Toast.makeText(mContext, position + " click item", Toast.LENGTH_LONG).show();
         });
-//        userAdapter.setOnItemChildViewClickListener(R.id.layout_more, (view, data, position) -> {
-//            onClickOptionItem((User) data);
-//        });
+        userAdapter.setOnItemChildViewClickListener(R.id.layout_more, (view, data, position) -> {
+            onClickOptionItem((User) data);
+        });
 
         return userAdapter;
     }
@@ -58,15 +60,6 @@ public class MainViewModel extends RecyclerViewModel {
     @Override
     protected RecyclerView.LayoutManager createLayoutManager() {
         return new LinearLayoutManager(mContext);
-    }
-
-    public void addUser(String userName) {
-        mManager.addUser(userName);
-        refresh(new ArrayList<>(mManager.getAllUser()));
-    }
-
-    public void deleteUser(User user) {
-        mManager.deleteUser(user);
     }
 
     public void destroyRealm() {
@@ -82,12 +75,45 @@ public class MainViewModel extends RecyclerViewModel {
         TextView tvDelete = (TextView) mDialog.findViewById(R.id.tv_delete);
 
         RxView.clicks(tvEdit).throttleFirst(Constant.THROTTLE_FIRST_TIME, TimeUnit.SECONDS).subscribe(aVoid1 -> {
+            onCreateEditUser(false, user);
             mDialog.dismiss();
         });
         RxView.clicks(tvDelete).throttleFirst(Constant.THROTTLE_FIRST_TIME, TimeUnit.SECONDS).subscribe(aVoid1 -> {
-            deleteUser(user);
+            mManager.deleteUser(user);
+            refresh(new ArrayList<>(mManager.getAllUser()));
             mDialog.dismiss();
         });
         mDialog.show();
+    }
+
+    public void onCreateEditUser(boolean isCreate, User user) {
+        final Dialog mDialog = new Dialog(mContext, R.style.Dialog_Transparent);
+        AppUtils.setOverScreenDialog(mDialog, mContext);
+
+        mDialog.setContentView(R.layout.layout_add_user);
+        TextView tvOk = (TextView) mDialog.findViewById(R.id.tv_ok);
+        TextView tvCancel = (TextView) mDialog.findViewById(R.id.tv_cancel);
+        EditText edtUserName = (EditText) mDialog.findViewById(R.id.edt_add_user);
+
+        TextView tvTitle = (TextView) mDialog.findViewById(R.id.tv_title);
+        if (!isCreate) {
+            tvTitle.setText(mContext.getString(R.string.edit_user));
+            edtUserName.setText(user.getName());
+        }
+
+        RxView.clicks(tvCancel).throttleFirst(Constant.THROTTLE_FIRST_TIME, TimeUnit.SECONDS).subscribe(aVoid1 -> {
+            mDialog.dismiss();
+        });
+        RxView.clicks(tvOk).throttleFirst(Constant.THROTTLE_FIRST_TIME, TimeUnit.SECONDS).subscribe(aVoid1 -> {
+            if (isCreate) {
+                mManager.addUser(edtUserName.getText().toString());
+            } else{
+                mManager.editUser(user, edtUserName.getText().toString());
+            }
+            refresh(new ArrayList<>(mManager.getAllUser()));
+            mDialog.dismiss();
+        });
+        mDialog.show();
+
     }
 }

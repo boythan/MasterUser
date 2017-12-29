@@ -28,32 +28,43 @@ public class PlanManager {
     public PlanManager(Api api, @Named("activityContext") Context context) {
         this.api = api;
         this.context = context;
-        realm =  Realm.getInstance(context);
+        realm = Realm.getInstance(context);
     }
 
     public Observable<ArrayList<GithubUser>> getGithubUser() {
         return api.getUsers();
     }
 
-    public void addUser(String userName){
+    public void addUser(String userName) {
         realm.beginTransaction();
         User user = realm.createObject(User.class);
+
+        long id = System.currentTimeMillis();
+        user.setId(id);
+
         user.setName(userName);
         realm.commitTransaction();
     }
 
-    public List<User> getAllUser(){
+    public List<User> getAllUser() {
         return realm.allObjects(User.class);
     }
 
-    public void closeRealm(){
+    public void closeRealm() {
         realm.close();
     }
 
     public void deleteUser(User user) {
         realm.beginTransaction();
-        RealmResults<User> result = realm.where(User.class).equalTo("name",user.getName()).findAll();
+        RealmResults<User> result = realm.where(User.class).equalTo("id", user.getId()).findAll();
         result.clear();
+        realm.commitTransaction();
+    }
+
+    public void editUser(User user, String userName) {
+        realm.beginTransaction();
+        User result = realm.where(User.class).equalTo("id", user.getId()).findFirst();
+        result.setName(userName);
         realm.commitTransaction();
     }
 }
