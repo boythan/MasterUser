@@ -67,7 +67,7 @@ public class MainViewModel extends RecyclerViewModel {
     }
 
     private void onClickOptionItem(User user) {
-        final Dialog mDialog = new Dialog(mContext, R.style.Dialog_Transparent);
+        final Dialog mDialog = new Dialog(mContext, R.style.MyDialogStyle);
         AppUtils.setOverScreenDialog(mDialog, mContext);
 
         mDialog.setContentView(R.layout.layout_option_user);

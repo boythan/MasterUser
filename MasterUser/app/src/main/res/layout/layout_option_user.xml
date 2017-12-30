@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/padding_medium"
-    android:gravity="bottom">
+    android:gravity="bottom"
+    android:background="@color/color_mostly_black_20">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,13 +12,13 @@
         android:layout_gravity="bottom"
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/shape_border_conner">
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/tv_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_border_view"
+            android:layout_marginTop="@dimen/padding_medium"
             android:drawableLeft="@android:drawable/ic_menu_edit"
             android:drawablePadding="@dimen/padding_medium"
             android:gravity="center_vertical"
@@ -31,7 +31,7 @@
             android:id="@+id/tv_delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_border_view"
+           android:layout_marginBottom="@dimen/padding_medium"
             android:drawableLeft="@android:drawable/ic_menu_delete"
             android:drawablePadding="@dimen/padding_medium"
             android:gravity="center_vertical"
