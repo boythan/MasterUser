@@ -1,10 +1,9 @@
-
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
 repositories {
-    maven {url "https://clojars.org/repo/"}
+    maven { url "https://clojars.org/repo/" }
     mavenCentral()
     maven { url 'https://maven.fabric.io/public' }
 }
@@ -40,46 +39,58 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    def supportLibVersion = globalConfiguration.getAt("supportLibVersion")
+    def googlePlayServiceVersion = globalConfiguration.getAt("googlePlayServiceVersion")
+    def gson = globalConfiguration.getAt("gson")
+    def rxJava = globalConfiguration.getAt("rxJava")
+    def rxAndroid = globalConfiguration.getAt("rxAndroid")
+    def rxBinding = globalConfiguration.getAt("rxBinding")
+    def rxPermission = globalConfiguration.getAt("rxPermission")
+    def daggerVersion = globalConfiguration.getAt("daggerVersion")
+    def retrofit = globalConfiguration.getAt("retrofit")
+    def picasso = globalConfiguration.getAt("picasso")
+    def okhttp = globalConfiguration.getAt("okhttp")
+    def realm = globalConfiguration.getAt("realm")
+
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.android.support:recyclerview-v7:23.1.0'
-    compile 'com.android.support:cardview-v7:23.1.0'
-    compile 'com.google.android.gms:play-services:7.5.0'
+    compile "com.android.support:appcompat-v7:$supportLibVersion"
+    compile "com.android.support:recyclerview-v7:$supportLibVersion"
+    compile "com.android.support:cardview-v7:$supportLibVersion"
+    compile "com.google.android.gms:play-services:$googlePlayServiceVersion"
 
     // Dagger library
     compile 'org.glassfish:javax.annotation:10.0-b28'
-    compile 'com.google.dagger:dagger:2.7'
-    apt 'com.google.dagger:dagger-compiler:2.7'
+    compile "com.google.dagger:dagger:$daggerVersion"
+    apt "com.google.dagger:dagger-compiler:$daggerVersion"
 
     // Others
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.google.code.gson:gson:2.3.1'
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile "com.google.code.gson:gson:$gson"
+    compile "com.squareup.picasso:picasso:$picasso"
 
     // Rx
-    compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'com.jakewharton.rxbinding:rxbinding:0.2.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    compile "com.tbruyelle.rxpermissions:rxpermissions:0.7.1@aar"
+    compile "io.reactivex:rxandroid:$rxAndroid"
+    compile "com.jakewharton.rxbinding:rxbinding:$rxBinding"
+    compile "com.squareup.okhttp3:logging-interceptor:$okhttp"
+    compile "com.tbruyelle.rxpermissions:rxpermissions:$rxPermission"
 
-    //UI
+//    //UI
     compile "uk.co.chrisjenx:calligraphy:2.2.0"
 
     // Retrofits
-    compile "com.squareup.retrofit2:retrofit:2.1.0"
-    compile "com.squareup.retrofit2:adapter-rxjava:2.1.0"
-    compile "com.squareup.retrofit2:converter-gson:2.1.0"
+    compile "com.squareup.retrofit2:retrofit:$retrofit"
+    compile "com.squareup.retrofit2:adapter-rxjava:$retrofit"
+    compile "com.squareup.retrofit2:converter-gson:$retrofit"
 
     //realm
-    compile 'io.realm:realm-android:0.84.1'
+    compile "io.realm:realm-android:$realm"
 
     testCompile 'junit:junit:4.12'
-//    androidTestApt "com.google.dagger:dagger-compiler:2.0.1"
-//    androidTestCompile 'com.android.support.test:runner:0.4.1'
-//    androidTestCompile 'com.android.support.test:rules:0.4.1'
-//    androidTestCompile 'com.android.support:support-annotations:23.1.0'
     testCompile 'org.mockito:mockito-core:2.0.31-beta'
     testCompile 'org.hamcrest:hamcrest-library:1.3'
     androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:2.7"

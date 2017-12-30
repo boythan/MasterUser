@@ -1,0 +1,53 @@
+ext {
+    //Android
+    androidBuildToolsVersion = "25.0.0"
+    androidMinSdkVersion = 16
+    androidTargetSdkVersion = 24
+    androidCompileSdkVersion = 24
+
+    // Google
+    supportLibVersion = "25.0.0"
+    googlePlayServiceVersion = '7.5.0'
+    gson = '2.3.1'
+
+    // Rx
+    rxJava = '1.2.0'
+    rxAndroid = '1.0.1'
+    rxBinding = '0.2.0'
+    rxPermission = '0.7.1@aar'
+
+
+    // Dagger2
+    daggerVersion = '2.7'
+
+    // Retrofit
+    retrofit = '2.1.0' //compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    okhttp = '3.4.1'
+
+    // Image loader
+    glide = '3.7.0' //compile 'com.github.bumptech.glide:glide:3.7.0'
+    glideTransformation = '2.0.1' // wasabeef
+    picasso = '2.5.2'
+
+    // UI
+    flexBoxLayout = '0.2.3'
+    calligraphy = '2.2.0' //compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+    materialDialog = '0.9.0.2'
+
+    // LightCycle
+    lightCycle = '1.1.0'
+
+    // Our library
+    navigator = '0.5.5'
+    binding = '0.1.2'
+    collectionModule = '0.1.2'
+    dotProgress = '0.1'
+
+    // Others
+    icePick = '3.2.0'
+    //realm
+    realm = '0.84.1'
+
+
+
+}
