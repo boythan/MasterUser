@@ -48,7 +48,7 @@ public class MainViewModel extends RecyclerViewModel {
         userAdapter = new RecyclerViewAdapter<User>(R.layout.item_user, new ArrayList<>(mManager.getAllUser())) {
         };
         userAdapter.setOnItemClickListener((itemView, data, position) -> {
-            Toast.makeText(mContext, position + " click item", Toast.LENGTH_LONG).show();
+
         });
         userAdapter.setOnItemChildViewClickListener(R.id.layout_more, (view, data, position) -> {
             onClickOptionItem((User) data);
@@ -66,6 +66,10 @@ public class MainViewModel extends RecyclerViewModel {
         mManager.closeRealm();
     }
 
+    /**
+     * select option delete/edit user
+     * @param user
+     */
     private void onClickOptionItem(User user) {
         final Dialog mDialog = new Dialog(mContext, R.style.MyDialogStyle);
         AppUtils.setOverScreenDialog(mDialog, mContext);
@@ -86,6 +90,11 @@ public class MainViewModel extends RecyclerViewModel {
         mDialog.show();
     }
 
+    /**
+     * show dialog to create/edit user
+     * @param isCreate
+     * @param user
+     */
     public void onCreateEditUser(boolean isCreate, User user) {
         final Dialog mDialog = new Dialog(mContext, R.style.Dialog_Transparent);
         AppUtils.setOverScreenDialog(mDialog, mContext);
